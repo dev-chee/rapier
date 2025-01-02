@@ -10,7 +10,7 @@ resolver = "2"
 #simba = { path = "../simba" }
 #kiss3d = { path = "../kiss3d" }
 #parry2d = { path = "../parry/crates/parry2d" }
-#parry3d = { path = "../parry/crates/parry3d" }
+# parry3d = { path = "../parry/crates/parry3d" }
 #parry2d-f64 = { path = "../parry/crates/parry2d-f64" }
 #parry3d-f64 = { path = "../parry/crates/parry3d-f64" }
 #nalgebra = { path = "../nalgebra" }
@@ -19,7 +19,7 @@ resolver = "2"
 #kiss3d = { git = "https://github.com/sebcrozet/kiss3d" }
 #nalgebra = { git = "https://github.com/dimforge/nalgebra", branch = "dev" }
 #parry2d = { git = "https://github.com/dimforge/parry", branch = "master" }
-#parry3d = { git = "https://github.com/dimforge/parry", branch = "master" }
+parry3d = { git = "https://github.com/dev-chee/parry", branch = "patch/v0.17.x" }
 #parry2d-f64 = { git = "https://github.com/dimforge/parry", branch = "master" }
 #parry3d-f64 = { git = "https://github.com/dimforge/parry", branch = "master" }
 
