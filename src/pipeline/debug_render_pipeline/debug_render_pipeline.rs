@@ -4,7 +4,7 @@ use crate::dynamics::{
 };
 use crate::geometry::{Ball, ColliderSet, Cuboid, NarrowPhase, Shape, TypedShape};
 #[cfg(feature = "dim3")]
-use crate::geometry::{Cone, Cylinder};
+use crate::geometry::{Cone, Cylinder, Prism};
 use crate::math::{Isometry, Point, Real, Vector, DIM};
 use crate::pipeline::debug_render_pipeline::debug_render_backend::DebugRenderObject;
 use crate::pipeline::debug_render_pipeline::DebugRenderStyle;
@@ -563,6 +563,17 @@ impl DebugRenderPipeline {
                     idx,
                     pos,
                     &(Vector::new(s.radius, s.half_height, s.radius) * 2.0),
+                    color,
+                )
+            }
+            TypedShape::Prism(s) => {
+                let (vtx, idx) = &self.instances[&TypeId::of::<Prism>()];
+                backend.draw_polyline(
+                    object,
+                    vtx,
+                    idx,
+                    pos,
+                    &(Vector::new(s.radius, s.half_height * 2.0, s.radius)),
                     color,
                 )
             }
