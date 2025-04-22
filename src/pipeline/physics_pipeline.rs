@@ -434,6 +434,9 @@ impl PhysicsPipeline {
             islands.wake_up(bodies, handle, true);
         }
 
+        // Apply remove colliders.
+        colliders.erase_removed();
+
         // Apply modifications.
         let mut modified_colliders = colliders.take_modified();
         let mut removed_colliders = colliders.take_removed();

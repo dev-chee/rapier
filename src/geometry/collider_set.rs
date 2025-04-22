@@ -181,6 +181,14 @@ impl ColliderSet {
         }
     }
 
+    /// Delete all colliders that have been removed from the set.
+    pub fn erase_removed(&mut self) {
+        //self.removed_colliders.clear();
+        for handle in &self.removed_colliders {
+            self.colliders.remove(handle.0);
+        }
+    }
+
     /// Remove a collider from this set and update its parent accordingly.
     ///
     /// If `wake_up` is `true`, the rigid-body the removed collider is attached to
@@ -191,8 +199,8 @@ impl ColliderSet {
         islands: &mut IslandManager,
         bodies: &mut RigidBodySet,
         wake_up: bool,
-    ) -> Option<Collider> {
-        let collider = self.colliders.remove(handle.0)?;
+    ) -> Option<&Collider> {
+        let collider = self.colliders.get(handle.0)?;
 
         /*
          * Delete the collider from its parent body.
