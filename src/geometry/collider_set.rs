@@ -183,7 +183,6 @@ impl ColliderSet {
 
     /// Delete all colliders that have been removed from the set.
     pub fn erase_removed(&mut self) {
-        //self.removed_colliders.clear();
         for handle in &self.removed_colliders {
             self.colliders.remove(handle.0);
         }

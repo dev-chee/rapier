@@ -404,6 +404,45 @@ impl PhysicsPipeline {
         }
     }
 
+    /// Executes one timestep of the query pipeline.
+    pub fn step_query_pipeline(
+        &mut self,
+        bodies: &mut RigidBodySet,
+        colliders: &mut ColliderSet,
+        mut query_pipeline: Option<&mut QueryPipeline>,
+    ) {
+        colliders.erase_removed();
+
+        // Apply modifications.
+        let mut modified_colliders = colliders.take_modified();
+        let mut removed_colliders = colliders.take_removed();
+
+        super::user_changes::handle_user_changes_to_colliders(
+            bodies,
+            colliders,
+            &modified_colliders[..],
+        );
+
+        removed_colliders.extend(
+            modified_colliders
+                .iter()
+                .copied()
+                .filter(|h| colliders.get(*h).map(|c| !c.is_enabled()).unwrap_or(false)),
+        );
+
+        if let Some(queries) = query_pipeline.as_deref_mut() {
+            let refit_and_rebalance = modified_colliders.len() > 0 || removed_colliders.len() > 0;
+            queries.update_incremental(
+                colliders,
+                &modified_colliders,
+                &removed_colliders,
+                refit_and_rebalance,
+            );
+        }
+
+        self.clear_modified_colliders(colliders, &mut modified_colliders);
+    }
+
     /// Executes one timestep of the physics simulation.
     pub fn step(
         &mut self,
